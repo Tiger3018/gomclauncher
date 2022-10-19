@@ -76,7 +76,11 @@ func (l *launcher1155) cp() string {
 		v, ok := l.Gameinfo.flag[key]
 		add := func() {
 			b.WriteString(path)
-			b.WriteString(p.Downloads.Artifact.Path)
+			if p.Downloads.Classifiers != nil && p.Rules != nil {
+				b.WriteString(p.Downloads.Classifiers["natives"+p.Rules[0].Os.Name].Path)
+			} else {
+				b.WriteString(p.Downloads.Artifact.Path)
+			}
 			b.WriteByte(os.PathListSeparator)
 			if key == log4jpackname && needFixlog4j(pack[2]) {
 				l.fixlog4j = true
